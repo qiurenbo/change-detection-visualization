@@ -4,3 +4,8 @@
 body {
   width: 100%;
 }
+
+nz-card::before {
+  content: "«";
+  color: blue;
+}

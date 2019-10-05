@@ -1,3 +1,27 @@
-<nz-card style="width:150px;" nzTitle="compoent">
-  <p>Card content</p>
-</nz-card>
+<div
+  *ngIf="root"
+  style="width: 100%"
+  fxLayout="row"
+  fxLayoutAlign="center center"
+>
+  <nz-card style="width:200px;" [nzTitle]="'Node-' + deep">
+    <p>Card content</p>
+  </nz-card>
+</div>
+
+<div
+  *ngIf="!root"
+  style="width: 100%"
+  fxLayout="row"
+  fxLayoutAlign="center center"
+>
+  <nz-card
+    *ngFor="let branch of branches"
+    style="width:200px;"
+    [nzTitle]="'Node-' + deep"
+  >
+    <p>Card content</p>
+  </nz-card>
+</div>
+
+<app-tree-node *ngIf="deep > 0" [deep]="deep" [branch]="branch"></app-tree-node>
