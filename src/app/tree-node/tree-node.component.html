@@ -1,27 +1,29 @@
 <div
-  *ngIf="root"
-  style="width: 100%"
+  *ngIf="isRoot; else other_content"
   fxLayout="row"
   fxLayoutAlign="center center"
 >
-  <nz-card style="width:200px;" [nzTitle]="'Node-' + deep">
-    <p>Card content</p>
+  <nz-card style="width:200px;" [nzTitle]="'Node-' + deep" class="node">
+    <p>pass value:{{ pass }}</p>
   </nz-card>
 </div>
 
-<div
-  *ngIf="!root"
-  style="width: 100%"
-  fxLayout="row"
-  fxLayoutAlign="center center"
->
-  <nz-card
-    *ngFor="let branch of branches"
-    style="width:200px;"
-    [nzTitle]="'Node-' + deep"
-  >
-    <p>Card content</p>
-  </nz-card>
-</div>
+<ng-template #other_content>
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <nz-card
+      class="node"
+      *ngFor="let branch of branches"
+      style="width:200px;margin-right:20px"
+      [nzTitle]="'Node-' + deep"
+    >
+      <p>pass value:{{ pass }}</p>
+    </nz-card>
+  </div>
+</ng-template>
 
-<app-tree-node *ngIf="deep > 0" [deep]="deep" [branch]="branch"></app-tree-node>
+<app-tree-node
+  *ngIf="deep > 0"
+  [deep]="deep"
+  [branch]="branch"
+  [pass]="pass"
+></app-tree-node>

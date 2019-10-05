@@ -2,6 +2,19 @@
   margin-top: 20px;
 }
 
-.input {
+.config-input {
   margin: 20px;
+}
+
+.config {
+  margin-top: 20px;
+}
+
+.app-node {
+  width: 200px;
+  margin-right: 20px;
+}
+
+input {
+  margin-top: 5px;
 }

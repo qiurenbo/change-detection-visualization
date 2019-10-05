@@ -3,7 +3,10 @@ import {
   ViewChild,
   ViewContainerRef,
   TemplateRef,
-  NgZone
+  NgZone,
+  DoCheck,
+  AfterViewChecked,
+  OnInit
 } from "@angular/core";
 import { TreeNodeComponent } from "./tree-node/tree-node.component";
 
@@ -12,7 +15,7 @@ import { TreeNodeComponent } from "./tree-node/tree-node.component";
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"]
 })
-export class AppComponent {
+export class AppComponent implements OnInit, DoCheck, AfterViewChecked {
   @ViewChild("container", { read: ViewContainerRef, static: false })
   viewContainerRef: ViewContainerRef;
 
@@ -26,11 +29,9 @@ export class AppComponent {
   constructor(private zone: NgZone) {}
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
     setTimeout(() => {
       this.resetView();
-    }, 1000);
+    }, 10);
   }
   onButtonClick() {}
   onChangeDeep(value: number) {
@@ -49,14 +50,10 @@ export class AppComponent {
   }
 
   ngDoCheck(): void {
-    //Called every time that the input properties of a component or a directive are checked. Use it to extend change detection by performing a custom check.
-    //Add 'implements DoCheck' to the class.
     console.log(`app-component do check now`);
   }
 
   ngAfterViewChecked(): void {
-    //Called after every check of the component's view. Applies to components only.
-    //Add 'implements AfterViewChecked' to the class.
     console.log(`app-component finish check now`);
   }
 }

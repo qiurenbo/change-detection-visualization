@@ -1,6 +1,6 @@
-<div fxLayout="column" fxLayoutAlign="center center" class="container">
-  <div class="config">
-    <span class="input">
+<div class="container" fxLayout="row" fxLayoutAlign="space-evenly start">
+  <div class="config" fxLayout="column" fxLayoutAlign="center center">
+    <span class="config-input">
       <label for="deep">deep:</label>
       <input
         type="number"
@@ -10,7 +10,7 @@
         min="0"
       />
     </span>
-    <span class="input">
+    <span class="config-input">
       <label for="branch">branch:</label>
       <input
         type="number"
@@ -20,23 +20,24 @@
         min="0"
       />
     </span>
-    <ng-container #container> </ng-container>
   </div>
-
-  <ng-template #tree>
-    <div fxLayout="column" fxLayoutAlign="center center">
-      <nz-card style="width:200px;" nzTitle="App Component">
-        <div fxLayout="column" fxLayoutAlign="center center">
-          <button (click)="(onButtonClick)">click</button>
-          <input type="number" [(ngModel)]="pass" />
-        </div>
-      </nz-card>
-
-      <app-tree-node
-        [deep]="deep"
-        [branch]="branch"
-        [root]="true"
-      ></app-tree-node>
-    </div>
-  </ng-template>
+  <ng-container #container> </ng-container>
 </div>
+
+<ng-template #tree>
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <nz-card nzTitle="App Component" class="app-node">
+      <div fxLayout="column" fxLayoutAlign="center center">
+        <button (click)="(onButtonClick)">click</button>
+        <input type="number" [(ngModel)]="pass" />
+      </div>
+    </nz-card>
+
+    <app-tree-node
+      [deep]="deep"
+      [branch]="branch"
+      [isRoot]="true"
+      [pass]="pass"
+    ></app-tree-node>
+  </div>
+</ng-template>

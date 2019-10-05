@@ -3,6 +3,8 @@ import {
   OnInit,
   Input,
   NgZone,
+  DoCheck,
+  AfterViewChecked,
   ChangeDetectionStrategy
 } from "@angular/core";
 
@@ -12,12 +14,13 @@ import {
   styleUrls: ["./tree-node.component.css"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TreeNodeComponent implements OnInit {
+export class TreeNodeComponent implements OnInit, DoCheck, AfterViewChecked {
   constructor(private zone: NgZone) {}
 
   @Input() branch: number;
   @Input() deep: number;
-  @Input() root = false;
+  @Input() isRoot = false;
+  @Input() pass: number;
 
   branches: Array<number> = [];
 
@@ -29,14 +32,10 @@ export class TreeNodeComponent implements OnInit {
   }
 
   ngDoCheck(): void {
-    //Called every time that the input properties of a component or a directive are checked. Use it to extend change detection by performing a custom check.
-    //Add 'implements DoCheck' to the class.
     console.log(`node-${this.deep} do check now`);
   }
 
   ngAfterViewChecked(): void {
-    //Called after every check of the component's view. Applies to components only.
-    //Add 'implements AfterViewChecked' to the class.
     console.log(`node-${this.deep} finish check now`);
   }
 }
