@@ -56,11 +56,21 @@ export class AppComponent implements OnInit, DoCheck, AfterViewChecked {
 
   ngDoCheck(): void {
     console.log(`app-component do check now`);
-    this.renderer.addClass(this.appNodeRef.nativeElement, "trigger");
+
+    this.zone.runOutsideAngular(() => {
+      window.setTimeout(() => {
+        this.renderer.addClass(this.appNodeRef.nativeElement, "trigger");
+      }, 200);
+    });
   }
 
   ngAfterViewChecked(): void {
     console.log(`app-component finish check now`);
+    this.zone.runOutsideAngular(() => {
+      window.setTimeout(() => {
+        this.renderer.removeClass(this.appNodeRef.nativeElement, "trigger");
+      }, 500);
+    });
     // this.renderer.removeClass(this.appNodeRef.nativeElement, "trigger");
   }
 }

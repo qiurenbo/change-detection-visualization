@@ -6,7 +6,9 @@ import {
   DoCheck,
   AfterViewChecked,
   ChangeDetectionStrategy,
-  Renderer2
+  Renderer2,
+  ViewChild,
+  ElementRef
 } from "@angular/core";
 
 @Component({
@@ -22,10 +24,16 @@ export class TreeNodeComponent implements OnInit, DoCheck, AfterViewChecked {
   @Input() deep: number;
   @Input() isRoot = false;
   @Input() pass: number;
+  @Input() max = 3;
+
+  @ViewChild("node", { read: ElementRef, static: true })
+  nodeRef: ElementRef;
 
   branches: Array<number> = [];
+  level: number;
 
   ngOnInit() {
+    this.level = this.max - this.deep;
     this.deep--;
     for (let i = 0; i < this.branch; i++) {
       this.branches.push(i);
@@ -34,10 +42,19 @@ export class TreeNodeComponent implements OnInit, DoCheck, AfterViewChecked {
 
   ngDoCheck(): void {
     console.log(`node-${this.deep} do check now`);
-    // this.renderer.addClass(this.appNodeRef.nativeElement, "trigger");
+    this.zone.runOutsideAngular(() => {
+      window.setTimeout(() => {
+        this.renderer.addClass(this.nodeRef.nativeElement, "trigger");
+      }, 500 * (this.level + 1));
+    });
   }
 
   ngAfterViewChecked(): void {
     console.log(`node-${this.deep} finish check now`);
+    this.zone.runOutsideAngular(() => {
+      window.setTimeout(() => {
+        this.renderer.removeClass(this.nodeRef.nativeElement, "trigger");
+      }, 500 * (this.level + 1) + 500);
+    });
   }
 }

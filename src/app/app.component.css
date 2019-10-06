@@ -1,6 +1,3 @@
-.container {
-  margin-top: 20px;
-}
 .config {
   margin-top: 20px;
   position: absolute;
@@ -25,11 +22,20 @@
   margin-top: 5px;
 }
 
-.app-node {
-  width: 200px;
+.container {
+  margin-top: 20px;
+}
+.container nz-card {
+  width: 150px;
+  height: 200px;
   margin-right: 20px;
 }
-
+.container nz-card .card-body {
+  height: 100px;
+}
+nz-card input {
+  width: 50px;
+}
 .trigger {
   background-color: coral;
 }
