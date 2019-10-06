@@ -27,11 +27,11 @@
 }
 .container nz-card {
   width: 150px;
-  height: 200px;
+  height: 230px;
   margin-right: 20px;
 }
 .container nz-card .card-body {
-  height: 100px;
+  height: 150px;
 }
 nz-card input {
   width: 50px;

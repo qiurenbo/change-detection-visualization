@@ -27,10 +27,15 @@ export class AppComponent implements OnInit, DoCheck, AfterViewChecked {
   @ViewChild("appNode", { read: ElementRef, static: true })
   appNodeRef: ElementRef;
 
+  @ViewChild("tip", { read: ElementRef, static: true })
+  tipRef: ElementRef;
+
   title = "change-detection-visualization";
   deep = 3;
   branch = 2;
   pass = 3;
+  startTime = 0;
+  timeInterval = 500;
   constructor(private zone: NgZone, private renderer: Renderer2) {}
 
   ngOnInit(): void {
@@ -60,7 +65,8 @@ export class AppComponent implements OnInit, DoCheck, AfterViewChecked {
     this.zone.runOutsideAngular(() => {
       window.setTimeout(() => {
         this.renderer.addClass(this.appNodeRef.nativeElement, "trigger");
-      }, 200);
+        this.tipRef.nativeElement.innerText = "detector trigger";
+      }, this.startTime);
     });
   }
 
@@ -69,7 +75,8 @@ export class AppComponent implements OnInit, DoCheck, AfterViewChecked {
     this.zone.runOutsideAngular(() => {
       window.setTimeout(() => {
         this.renderer.removeClass(this.appNodeRef.nativeElement, "trigger");
-      }, 500);
+        this.tipRef.nativeElement.innerText = "";
+      }, this.startTime + this.timeInterval);
     });
     // this.renderer.removeClass(this.appNodeRef.nativeElement, "trigger");
   }

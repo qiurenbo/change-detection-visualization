@@ -8,7 +8,8 @@ import {
   ChangeDetectionStrategy,
   Renderer2,
   ViewChild,
-  ElementRef
+  ElementRef,
+  ChangeDetectorRef
 } from "@angular/core";
 
 @Component({
@@ -18,7 +19,11 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TreeNodeComponent implements OnInit, DoCheck, AfterViewChecked {
-  constructor(private zone: NgZone, private renderer: Renderer2) {}
+  constructor(
+    private zone: NgZone,
+    private renderer: Renderer2,
+    private cd: ChangeDetectorRef
+  ) {}
 
   @Input() branch: number;
   @Input() deep: number;
@@ -29,9 +34,13 @@ export class TreeNodeComponent implements OnInit, DoCheck, AfterViewChecked {
   @ViewChild("node", { read: ElementRef, static: true })
   nodeRef: ElementRef;
 
+  @ViewChild("tip", { read: ElementRef, static: true })
+  tipRef: ElementRef;
+
   branches: Array<number> = [];
   level: number;
-
+  startTime = 500;
+  timeInterval = 500;
   ngOnInit() {
     this.level = this.max - this.deep;
     this.deep--;
@@ -45,7 +54,8 @@ export class TreeNodeComponent implements OnInit, DoCheck, AfterViewChecked {
     this.zone.runOutsideAngular(() => {
       window.setTimeout(() => {
         this.renderer.addClass(this.nodeRef.nativeElement, "trigger");
-      }, 500 * (this.level + 1));
+        this.tipRef.nativeElement.innerText = "detector trigger";
+      }, this.startTime * (this.level + 1));
     });
   }
 
@@ -54,7 +64,8 @@ export class TreeNodeComponent implements OnInit, DoCheck, AfterViewChecked {
     this.zone.runOutsideAngular(() => {
       window.setTimeout(() => {
         this.renderer.removeClass(this.nodeRef.nativeElement, "trigger");
-      }, 500 * (this.level + 1) + 500);
+        this.tipRef.nativeElement.innerText = "";
+      }, this.startTime * (this.level + 1) + this.timeInterval);
     });
   }
 }
