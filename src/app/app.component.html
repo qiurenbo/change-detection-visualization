@@ -1,43 +1,45 @@
-<div class="container" fxLayout="row" fxLayoutAlign="space-evenly start">
-  <div class="config" fxLayout="column" fxLayoutAlign="center center">
-    <span class="config-input">
-      <label for="deep">deep:</label>
-      <input
-        type="number"
-        [value]="deep"
-        (input)="onChangeDeep($event.target.value)"
-        id="deep"
-        min="0"
-      />
-    </span>
-    <span class="config-input">
-      <label for="branch">branch:</label>
-      <input
-        type="number"
-        [value]="branch"
-        (input)="onChangeBranch($event.target.value)"
-        id="branch"
-        min="0"
-      />
-    </span>
+<div class="config" fxLayout="column" fxLayoutAlign="space-evenly center">
+  <div fxLayout="row" fxLayoutAlign="space-evenly center" class="config-input">
+    <label for="deep">deep:</label>
+    <input
+      type="number"
+      [value]="deep"
+      (input)="onChangeDeep($event.target.value)"
+      id="deep"
+      min="1"
+      max="3"
+    />
   </div>
-  <ng-container #container> </ng-container>
-</div>
 
-<ng-template #tree>
+  <div fxLayout="row" fxLayoutAlign="space-evenly center" class="config-input">
+    <label for="branch">branch:</label>
+    <input
+      type="number"
+      [value]="branch"
+      (input)="onChangeBranch($event.target.value)"
+      id="branch"
+      min="1"
+      max="3"
+    />
+  </div>
+</div>
+<div class="container" fxLayout="row" fxLayoutAlign="space-evenly start">
   <div fxLayout="column" fxLayoutAlign="center center">
-    <nz-card nzTitle="App Component" class="app-node">
+    <nz-card nzTitle="App Component" class="app-node" #appNode>
       <div fxLayout="column" fxLayoutAlign="center center">
         <button (click)="(onButtonClick)">click</button>
         <input type="number" [(ngModel)]="pass" />
       </div>
     </nz-card>
-
-    <app-tree-node
-      [deep]="deep"
-      [branch]="branch"
-      [isRoot]="true"
-      [pass]="pass"
-    ></app-tree-node>
+    <ng-container #viewContainer> </ng-container>
   </div>
+</div>
+
+<ng-template #viewTemplate>
+  <app-tree-node
+    [deep]="deep"
+    [branch]="branch"
+    [isRoot]="true"
+    [pass]="pass"
+  ></app-tree-node>
 </ng-template>

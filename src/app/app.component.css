@@ -1,13 +1,28 @@
 .container {
   margin-top: 20px;
 }
-
-.config-input {
-  margin: 20px;
-}
-
 .config {
   margin-top: 20px;
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  width: 300px;
+  height: 300px;
+  border: 1px solid;
+}
+
+.config .config-input {
+  width: 130px;
+}
+
+.config .config-input label {
+  width: 60px;
+  height: 20px;
+}
+
+.config .config-input input {
+  width: 60px;
+  margin-top: 5px;
 }
 
 .app-node {
@@ -15,6 +30,6 @@
   margin-right: 20px;
 }
 
-input {
-  margin-top: 5px;
+.trigger {
+  background-color: coral;
 }

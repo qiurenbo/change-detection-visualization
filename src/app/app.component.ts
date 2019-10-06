@@ -6,7 +6,9 @@ import {
   NgZone,
   DoCheck,
   AfterViewChecked,
-  OnInit
+  OnInit,
+  Renderer2,
+  ElementRef
 } from "@angular/core";
 import { TreeNodeComponent } from "./tree-node/tree-node.component";
 
@@ -16,44 +18,49 @@ import { TreeNodeComponent } from "./tree-node/tree-node.component";
   styleUrls: ["./app.component.css"]
 })
 export class AppComponent implements OnInit, DoCheck, AfterViewChecked {
-  @ViewChild("container", { read: ViewContainerRef, static: false })
+  @ViewChild("viewContainer", { read: ViewContainerRef, static: false })
   viewContainerRef: ViewContainerRef;
 
-  @ViewChild("tree", { read: TemplateRef, static: false })
+  @ViewChild("viewTemplate", { read: TemplateRef, static: false })
   templateRef: TemplateRef<TreeNodeComponent>;
+
+  @ViewChild("appNode", { read: ElementRef, static: true })
+  appNodeRef: ElementRef;
 
   title = "change-detection-visualization";
   deep = 3;
   branch = 2;
   pass = 3;
-  constructor(private zone: NgZone) {}
+  constructor(private zone: NgZone, private renderer: Renderer2) {}
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.resetView();
-    }, 10);
+      this.createView();
+    }, 1);
   }
   onButtonClick() {}
   onChangeDeep(value: number) {
     this.deep = value;
-    this.resetView();
+    this.createView();
   }
 
   onChangeBranch(value: number) {
     this.branch = value;
-    this.resetView();
+    this.createView();
   }
 
-  resetView() {
+  createView() {
     this.viewContainerRef.clear();
     this.viewContainerRef.createEmbeddedView(this.templateRef);
   }
 
   ngDoCheck(): void {
     console.log(`app-component do check now`);
+    this.renderer.addClass(this.appNodeRef.nativeElement, "trigger");
   }
 
   ngAfterViewChecked(): void {
     console.log(`app-component finish check now`);
+    // this.renderer.removeClass(this.appNodeRef.nativeElement, "trigger");
   }
 }

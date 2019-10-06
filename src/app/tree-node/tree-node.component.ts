@@ -5,7 +5,8 @@ import {
   NgZone,
   DoCheck,
   AfterViewChecked,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  Renderer2
 } from "@angular/core";
 
 @Component({
@@ -15,7 +16,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TreeNodeComponent implements OnInit, DoCheck, AfterViewChecked {
-  constructor(private zone: NgZone) {}
+  constructor(private zone: NgZone, private renderer: Renderer2) {}
 
   @Input() branch: number;
   @Input() deep: number;
@@ -33,6 +34,7 @@ export class TreeNodeComponent implements OnInit, DoCheck, AfterViewChecked {
 
   ngDoCheck(): void {
     console.log(`node-${this.deep} do check now`);
+    // this.renderer.addClass(this.appNodeRef.nativeElement, "trigger");
   }
 
   ngAfterViewChecked(): void {
