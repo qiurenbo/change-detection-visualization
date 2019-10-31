@@ -8,3 +8,7 @@
 .trigger {
   background-color: coral;
 }
+
+.trigger-change {
+  background-color: rgb(33, 50, 199);
+}

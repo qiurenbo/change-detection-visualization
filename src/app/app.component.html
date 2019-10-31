@@ -22,6 +22,18 @@
       max="3"
     />
   </div>
+
+  <div fxLayout="row" fxLayoutAlign="space-evenly center" class="config-input">
+    <label for="data">data:</label>
+    <input
+      type="number"
+      [value]="data.id"
+      (input)="onChangeData($event.target.value)"
+      id="data"
+      min="1"
+      max="3"
+    />
+  </div>
 </div>
 <div class="container" fxLayout="row" fxLayoutAlign="space-evenly start">
   <div fxLayout="column" fxLayoutAlign="center center">
@@ -36,7 +48,14 @@
         <p #tip></p>
       </div>
     </nz-card>
-
+    <!-- 
+    <app-tree-node
+      [deep]="deep"
+      [branch]="branch"
+      [isRoot]="true"
+      [pass]="pass"
+      [data]="data"
+    ></app-tree-node> -->
     <ng-container #viewContainer> </ng-container>
   </div>
 </div>
@@ -47,5 +66,6 @@
     [branch]="branch"
     [isRoot]="true"
     [pass]="pass"
+    [data]="data"
   ></app-tree-node>
 </ng-template>

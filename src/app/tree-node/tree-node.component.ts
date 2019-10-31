@@ -9,7 +9,9 @@ import {
   Renderer2,
   ViewChild,
   ElementRef,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  OnChanges,
+  SimpleChanges
 } from "@angular/core";
 
 @Component({
@@ -18,7 +20,8 @@ import {
   styleUrls: ["./tree-node.component.css"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TreeNodeComponent implements OnInit, DoCheck, AfterViewChecked {
+export class TreeNodeComponent
+  implements OnInit, DoCheck, AfterViewChecked, OnChanges {
   constructor(
     private zone: NgZone,
     private renderer: Renderer2,
@@ -30,6 +33,7 @@ export class TreeNodeComponent implements OnInit, DoCheck, AfterViewChecked {
   @Input() isRoot = false;
   @Input() pass: number;
   @Input() max = 3;
+  @Input() data: any;
 
   @ViewChild("node", { read: ElementRef, static: true })
   nodeRef: ElementRef;
@@ -49,14 +53,22 @@ export class TreeNodeComponent implements OnInit, DoCheck, AfterViewChecked {
     }
   }
 
-  ngDoCheck(): void {
-    console.log(`node-${this.deep} do check now`);
+  ngOnChanges(changes: SimpleChanges): void {
     this.zone.runOutsideAngular(() => {
       window.setTimeout(() => {
         this.renderer.addClass(this.nodeRef.nativeElement, "trigger");
-        this.tipRef.nativeElement.innerText = "detector trigger";
+        this.tipRef.nativeElement.innerText = "change detected";
       }, this.startTime * (this.level + 1));
     });
+  }
+  ngDoCheck(): void {
+    // console.log(`node-${this.deep} do check now`);
+    // this.zone.runOutsideAngular(() => {
+    //   window.setTimeout(() => {
+    //     this.renderer.addClass(this.nodeRef.nativeElement, "trigger");
+    //     this.tipRef.nativeElement.innerText = "detector trigger";
+    //   }, this.startTime * (this.level + 1));
+    // });
   }
 
   ngAfterViewChecked(): void {

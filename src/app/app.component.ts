@@ -30,6 +30,7 @@ export class AppComponent implements OnInit, DoCheck, AfterViewChecked {
   @ViewChild("tip", { read: ElementRef, static: true })
   tipRef: ElementRef;
 
+  data = { id: 1 };
   title = "change-detection-visualization";
   deep = 3;
   branch = 2;
@@ -51,6 +52,11 @@ export class AppComponent implements OnInit, DoCheck, AfterViewChecked {
 
   onChangeBranch(value: number) {
     this.branch = value;
+    this.createView();
+  }
+
+  onChangeData(value: number) {
+    this.data.id = value;
     this.createView();
   }
 
