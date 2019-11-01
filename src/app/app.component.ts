@@ -11,6 +11,7 @@ import {
   ElementRef
 } from "@angular/core";
 import { TreeNodeComponent } from "./tree-node/tree-node.component";
+import { CountService } from "./count.service";
 
 @Component({
   selector: "app-root",
@@ -35,14 +36,22 @@ export class AppComponent implements OnInit, DoCheck, AfterViewChecked {
   deep = 3;
   branch = 2;
   pass = 3;
-  startTime = 0;
-  timeInterval = 500;
-  constructor(private zone: NgZone, private renderer: Renderer2) {}
+  startTime = 500;
+  timeInterval = 300;
+  constructor(
+    private zone: NgZone,
+    private renderer: Renderer2,
+    private countService: CountService
+  ) {}
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.createView();
-    }, 1);
+    // setTimeout(() => {
+    //   this.createView();
+    // }, 1);
+  }
+
+  resetCount() {
+    this.countService.count = 0;
   }
   onButtonClick() {}
   onChangeDeep(value: number) {
@@ -57,22 +66,21 @@ export class AppComponent implements OnInit, DoCheck, AfterViewChecked {
 
   onChangeData(value: number) {
     this.data.id = value;
-    this.createView();
+    // this.createView();
   }
 
   createView() {
-    this.viewContainerRef.clear();
-    this.viewContainerRef.createEmbeddedView(this.templateRef);
+    // this.viewContainerRef.clear();
+    // this.viewContainerRef.createEmbeddedView(this.templateRef);
   }
 
   ngDoCheck(): void {
     console.log(`app-component do check now`);
-
     this.zone.runOutsideAngular(() => {
       window.setTimeout(() => {
         this.renderer.addClass(this.appNodeRef.nativeElement, "trigger");
         this.tipRef.nativeElement.innerText = "detector trigger";
-      }, this.startTime);
+      }, this.startTime * this.countService.count);
     });
   }
 
@@ -82,8 +90,7 @@ export class AppComponent implements OnInit, DoCheck, AfterViewChecked {
       window.setTimeout(() => {
         this.renderer.removeClass(this.appNodeRef.nativeElement, "trigger");
         this.tipRef.nativeElement.innerText = "";
-      }, this.startTime + this.timeInterval);
+      }, this.startTime * this.countService.count + this.timeInterval);
     });
-    // this.renderer.removeClass(this.appNodeRef.nativeElement, "trigger");
   }
 }

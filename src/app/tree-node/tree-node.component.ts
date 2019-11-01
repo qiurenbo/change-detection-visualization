@@ -13,6 +13,7 @@ import {
   OnChanges,
   SimpleChanges
 } from "@angular/core";
+import { CountService } from "../count.service";
 
 @Component({
   selector: "app-tree-node",
@@ -20,12 +21,12 @@ import {
   styleUrls: ["./tree-node.component.css"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TreeNodeComponent
-  implements OnInit, DoCheck, AfterViewChecked, OnChanges {
+export class TreeNodeComponent implements OnInit, DoCheck, AfterViewChecked {
   constructor(
     private zone: NgZone,
     private renderer: Renderer2,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private countService: CountService
   ) {}
 
   @Input() branch: number;
@@ -44,7 +45,7 @@ export class TreeNodeComponent
   branches: Array<number> = [];
   level: number;
   startTime = 500;
-  timeInterval = 500;
+  timeInterval = 300;
   ngOnInit() {
     this.level = this.max - this.deep;
     this.deep--;
@@ -53,22 +54,23 @@ export class TreeNodeComponent
     }
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  // ngOnChanges(changes: SimpleChanges): void {
+  //   console.log(`node-${this.deep} do changes now`);
+  //   this.zone.runOutsideAngular(() => {
+  //     window.setTimeout(() => {
+  //       this.renderer.addClass(this.nodeRef.nativeElement, "trigger");
+  //       this.tipRef.nativeElement.innerText = "change detected";
+  //     }, this.startTime * this.countService.count);
+  //   });
+  // }
+  ngDoCheck(): void {
+    console.log(`node-${this.deep} do check now`);
     this.zone.runOutsideAngular(() => {
       window.setTimeout(() => {
         this.renderer.addClass(this.nodeRef.nativeElement, "trigger");
-        this.tipRef.nativeElement.innerText = "change detected";
-      }, this.startTime * (this.level + 1));
+        this.tipRef.nativeElement.innerText = "detector trigger";
+      }, this.startTime * this.countService.count);
     });
-  }
-  ngDoCheck(): void {
-    // console.log(`node-${this.deep} do check now`);
-    // this.zone.runOutsideAngular(() => {
-    //   window.setTimeout(() => {
-    //     this.renderer.addClass(this.nodeRef.nativeElement, "trigger");
-    //     this.tipRef.nativeElement.innerText = "detector trigger";
-    //   }, this.startTime * (this.level + 1));
-    // });
   }
 
   ngAfterViewChecked(): void {
@@ -77,7 +79,7 @@ export class TreeNodeComponent
       window.setTimeout(() => {
         this.renderer.removeClass(this.nodeRef.nativeElement, "trigger");
         this.tipRef.nativeElement.innerText = "";
-      }, this.startTime * (this.level + 1) + this.timeInterval);
+      }, this.startTime * this.countService.count + this.timeInterval);
     });
   }
 }

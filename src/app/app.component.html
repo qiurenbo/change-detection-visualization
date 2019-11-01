@@ -1,26 +1,6 @@
 <div class="config" fxLayout="column" fxLayoutAlign="space-evenly center">
   <div fxLayout="row" fxLayoutAlign="space-evenly center" class="config-input">
-    <label for="deep">deep:</label>
-    <input
-      type="number"
-      [value]="deep"
-      (input)="onChangeDeep($event.target.value)"
-      id="deep"
-      min="1"
-      max="3"
-    />
-  </div>
-
-  <div fxLayout="row" fxLayoutAlign="space-evenly center" class="config-input">
-    <label for="branch">branch:</label>
-    <input
-      type="number"
-      [value]="branch"
-      (input)="onChangeBranch($event.target.value)"
-      id="branch"
-      min="1"
-      max="3"
-    />
+    <button (click)="resetCount()">reset</button>
   </div>
 
   <div fxLayout="row" fxLayoutAlign="space-evenly center" class="config-input">
@@ -43,20 +23,20 @@
         fxLayout="column"
         fxLayoutAlign="space-evenly center"
       >
-        <button (click)="(onButtonClick)">click</button>
+        <!-- <button (click)="(onButtonClick)">click</button> -->
         <input type="number" [(ngModel)]="pass" />
         <p #tip></p>
       </div>
     </nz-card>
-    <!-- 
+
     <app-tree-node
       [deep]="deep"
       [branch]="branch"
       [isRoot]="true"
       [pass]="pass"
       [data]="data"
-    ></app-tree-node> -->
-    <ng-container #viewContainer> </ng-container>
+    ></app-tree-node>
+    <!-- <ng-container #viewContainer> </ng-container> -->
   </div>
 </div>
 

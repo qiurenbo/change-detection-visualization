@@ -5,11 +5,12 @@ import { AppComponent } from "./app.component";
 import { TreeNodeComponent } from "./tree-node/tree-node.component";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { NzCardModule } from "ng-zorro-antd/card";
+import { CountService } from "./count.service";
 
 @NgModule({
   declarations: [AppComponent, TreeNodeComponent],
   imports: [BrowserModule, NzCardModule, FlexLayoutModule, FormsModule],
-  providers: [],
+  providers: [CountService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
