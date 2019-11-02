@@ -3,4 +3,5 @@
 @import "~ng-zorro-antd/card/style/index.min.css"; /* Import styles of the component */
 body {
   width: 100%;
+  height: 95%;
 }

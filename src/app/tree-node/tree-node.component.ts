@@ -32,16 +32,16 @@ export class TreeNodeComponent implements OnInit, DoCheck, AfterViewChecked {
   @Input() branch: number;
   @Input() deep: number;
   @Input() isRoot = false;
-  @Input() pass: number;
+  @Input() byVal: number;
   @Input() max: number;
-  @Input() data: any;
+  @Input() byRef: any;
 
   @ViewChild("node", { read: ElementRef, static: true })
   nodeRef: ElementRef;
 
   branches: Array<number> = [];
   level: number;
-  interval = 200;
+  interval = 400;
 
   ngOnInit() {
     this.level = this.max - this.deep;
@@ -51,9 +51,15 @@ export class TreeNodeComponent implements OnInit, DoCheck, AfterViewChecked {
     }
   }
 
-  onInputChange(e) {
+  onValChange(e) {
     this.countService.count = 0;
-    this.pass = e.target.value;
+    this.byVal = e.target.value;
+  }
+
+  onRefChange(e) {
+    this.countService.count = 0;
+    this.byRef.id = e.target.value;
+    // this.cd.markForCheck();
   }
 
   // ngOnChanges(changes: SimpleChanges): void {

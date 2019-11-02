@@ -1,13 +1,19 @@
 <div class="container" fxLayout="row" fxLayoutAlign="space-evenly start">
   <div fxLayout="column" fxLayoutAlign="center center">
     <nz-card nzTitle="App Node" #appNode>
-      <div
-        class="card-body"
-        fxLayout="column"
-        fxLayoutAlign="space-evenly center"
-      >
-        <!-- <button (click)="(onButtonClick)">click</button> -->
-        <input type="number" [value]="pass" (change)="onInputChange($event)" />
+      <div fxLayout="column" fxLayoutAlign="space-evenly center">
+        <div>
+          <label><b>Val:</b></label>
+          <input type="number" [value]="byVal" (change)="onValChange($event)" />
+        </div>
+        <div>
+          <label><b>Ref:</b></label>
+          <input
+            type="number"
+            [value]="byRef.id"
+            (change)="onRefChange($event)"
+          />
+        </div>
       </div>
     </nz-card>
 
@@ -15,8 +21,8 @@
       [deep]="deep"
       [branch]="branch"
       [isRoot]="true"
-      [pass]="pass"
-      [data]="data"
+      [byVal]="byVal"
+      [byRef]="byRef"
       [max]="deep"
     ></app-tree-node>
   </div>

@@ -3,20 +3,26 @@
     #node
     class="node"
     style="width:150px;height:150px;margin-right:20px"
-    [nzTitle]="'Node-' + deep"
+    [nzTitle]="'Node-' + level"
   >
     <div
-      class="card-body"
       fxLayout="column"
       fxLayoutAlign="space-evenly center"
+      style="height: 100%;"
     >
-      <!-- <button (click)="(onButtonClick)">click</button> -->
-      <input type="number" [value]="pass" (change)="onInputChange($event)" />
+      <div>
+        <label><b>Val:</b></label>
+        <input type="number" [value]="byVal" (change)="onValChange($event)" />
+      </div>
+      <div>
+        <label><b>Ref:</b></label>
+        <input
+          type="number"
+          [value]="byRef.id"
+          (change)="onRefChange($event)"
+        />
+      </div>
     </div>
-
-    <!-- <p>pass value:{{ pass }}</p> -->
-
-    <!-- <button (click)="(onButtonClick)">click</button> -->
   </nz-card>
 
   <ng-container *ngIf="deep > 0">
@@ -25,8 +31,8 @@
         *ngFor="let b of branches"
         [deep]="deep"
         [branch]="branch"
-        [pass]="pass"
-        [data]="data"
+        [byVal]="byVal"
+        [byRef]="byRef"
         [max]="max"
       ></app-tree-node>
     </div>

@@ -8,7 +8,8 @@ import {
   AfterViewChecked,
   OnInit,
   Renderer2,
-  ElementRef
+  ElementRef,
+  ChangeDetectorRef
 } from "@angular/core";
 import { TreeNodeComponent } from "./tree-node/tree-node.component";
 import { CountService } from "./count.service";
@@ -28,27 +29,30 @@ export class AppComponent implements OnInit, DoCheck, AfterViewChecked {
   @ViewChild("appNode", { read: ElementRef, static: true })
   appNodeRef: ElementRef;
 
-  data = { id: 1 };
+  byRef = { id: 1 };
   title = "change-detection-visualization";
   deep = 3;
   branch = 2;
-  pass = 3;
-  interval = 200;
+  byVal = 3;
+  interval = 400;
 
   constructor(
     private zone: NgZone,
     private renderer: Renderer2,
-    private countService: CountService
+    private countService: CountService,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {}
-  onInputChange(e) {
+  onValChange(e) {
     this.countService.count = 0;
-    this.pass = e.target.value;
+    this.byVal = e.target.value;
   }
 
-  onChangeData(value: number) {
-    this.data.id = value;
+  onRefChange(e) {
+    this.countService.count = 0;
+    this.byRef.id = e.target.value;
+    // this.cd.markForCheck();
   }
 
   ngDoCheck(): void {
