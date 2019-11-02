@@ -33,19 +33,16 @@ export class TreeNodeComponent implements OnInit, DoCheck, AfterViewChecked {
   @Input() deep: number;
   @Input() isRoot = false;
   @Input() pass: number;
-  @Input() max = 3;
+  @Input() max: number;
   @Input() data: any;
 
   @ViewChild("node", { read: ElementRef, static: true })
   nodeRef: ElementRef;
 
-  @ViewChild("tip", { read: ElementRef, static: true })
-  tipRef: ElementRef;
-
   branches: Array<number> = [];
   level: number;
-  startTime = 500;
-  timeInterval = 300;
+  interval = 200;
+
   ngOnInit() {
     this.level = this.max - this.deep;
     this.deep--;
@@ -54,13 +51,18 @@ export class TreeNodeComponent implements OnInit, DoCheck, AfterViewChecked {
     }
   }
 
+  onInputChange(e) {
+    this.countService.count = 0;
+    this.pass = e.target.value;
+  }
+
   // ngOnChanges(changes: SimpleChanges): void {
   //   console.log(`node-${this.deep} do changes now`);
   //   this.zone.runOutsideAngular(() => {
   //     window.setTimeout(() => {
   //       this.renderer.addClass(this.nodeRef.nativeElement, "trigger");
   //       this.tipRef.nativeElement.innerText = "change detected";
-  //     }, this.startTime * this.countService.count);
+  //     }, this.interval * this.countService.count);
   //   });
   // }
   ngDoCheck(): void {
@@ -68,8 +70,7 @@ export class TreeNodeComponent implements OnInit, DoCheck, AfterViewChecked {
     this.zone.runOutsideAngular(() => {
       window.setTimeout(() => {
         this.renderer.addClass(this.nodeRef.nativeElement, "trigger");
-        this.tipRef.nativeElement.innerText = "detector trigger";
-      }, this.startTime * this.countService.count);
+      }, this.interval * this.countService.count);
     });
   }
 
@@ -78,8 +79,7 @@ export class TreeNodeComponent implements OnInit, DoCheck, AfterViewChecked {
     this.zone.runOutsideAngular(() => {
       window.setTimeout(() => {
         this.renderer.removeClass(this.nodeRef.nativeElement, "trigger");
-        this.tipRef.nativeElement.innerText = "";
-      }, this.startTime * this.countService.count + this.timeInterval);
+      }, this.interval * this.countService.count);
     });
   }
 }

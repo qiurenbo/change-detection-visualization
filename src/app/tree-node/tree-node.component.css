@@ -12,3 +12,6 @@
 .trigger-change {
   background-color: rgb(33, 50, 199);
 }
+nz-card input {
+  width: 50px;
+}

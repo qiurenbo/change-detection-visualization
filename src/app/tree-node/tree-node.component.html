@@ -5,9 +5,17 @@
     style="width:150px;height:150px;margin-right:20px"
     [nzTitle]="'Node-' + deep"
   >
-    <p>data id:{{ data.id }}</p>
-    <p>pass value:{{ pass }}</p>
-    <p #tip></p>
+    <div
+      class="card-body"
+      fxLayout="column"
+      fxLayoutAlign="space-evenly center"
+    >
+      <!-- <button (click)="(onButtonClick)">click</button> -->
+      <input type="number" [value]="pass" (change)="onInputChange($event)" />
+    </div>
+
+    <!-- <p>pass value:{{ pass }}</p> -->
+
     <!-- <button (click)="(onButtonClick)">click</button> -->
   </nz-card>
 
@@ -19,6 +27,7 @@
         [branch]="branch"
         [pass]="pass"
         [data]="data"
+        [max]="max"
       ></app-tree-node>
     </div>
   </ng-container>

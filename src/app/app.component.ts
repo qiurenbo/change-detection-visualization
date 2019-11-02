@@ -28,50 +28,27 @@ export class AppComponent implements OnInit, DoCheck, AfterViewChecked {
   @ViewChild("appNode", { read: ElementRef, static: true })
   appNodeRef: ElementRef;
 
-  @ViewChild("tip", { read: ElementRef, static: true })
-  tipRef: ElementRef;
-
   data = { id: 1 };
   title = "change-detection-visualization";
   deep = 3;
   branch = 2;
   pass = 3;
-  startTime = 500;
-  timeInterval = 300;
+  interval = 200;
+
   constructor(
     private zone: NgZone,
     private renderer: Renderer2,
     private countService: CountService
   ) {}
 
-  ngOnInit(): void {
-    // setTimeout(() => {
-    //   this.createView();
-    // }, 1);
-  }
-
-  resetCount() {
+  ngOnInit(): void {}
+  onInputChange(e) {
     this.countService.count = 0;
-  }
-  onButtonClick() {}
-  onChangeDeep(value: number) {
-    this.deep = value;
-    this.createView();
-  }
-
-  onChangeBranch(value: number) {
-    this.branch = value;
-    this.createView();
+    this.pass = e.target.value;
   }
 
   onChangeData(value: number) {
     this.data.id = value;
-    // this.createView();
-  }
-
-  createView() {
-    // this.viewContainerRef.clear();
-    // this.viewContainerRef.createEmbeddedView(this.templateRef);
   }
 
   ngDoCheck(): void {
@@ -79,8 +56,7 @@ export class AppComponent implements OnInit, DoCheck, AfterViewChecked {
     this.zone.runOutsideAngular(() => {
       window.setTimeout(() => {
         this.renderer.addClass(this.appNodeRef.nativeElement, "trigger");
-        this.tipRef.nativeElement.innerText = "detector trigger";
-      }, this.startTime * this.countService.count);
+      }, this.interval * this.countService.count);
     });
   }
 
@@ -89,8 +65,7 @@ export class AppComponent implements OnInit, DoCheck, AfterViewChecked {
     this.zone.runOutsideAngular(() => {
       window.setTimeout(() => {
         this.renderer.removeClass(this.appNodeRef.nativeElement, "trigger");
-        this.tipRef.nativeElement.innerText = "";
-      }, this.startTime * this.countService.count + this.timeInterval);
+      }, this.interval * this.countService.count);
     });
   }
 }
